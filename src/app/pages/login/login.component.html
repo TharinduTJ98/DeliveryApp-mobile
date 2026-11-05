@@ -1,0 +1,134 @@
+<main class="auth-page">
+  <section class="auth-layout" aria-label="Sign in">
+    <aside class="auth-story">
+      <a class="brand" routerLink="/login" aria-label="Dash home">
+        <span class="brand-mark" aria-hidden="true">d</span>
+        <span>dash<span class="brand-dot">.</span></span>
+      </a>
+
+      <div class="story-copy">
+        <p class="eyebrow">GOOD FOOD, GOOD MOOD</p>
+        <h1>Your next favorite meal is just around the corner.</h1>
+        <p>From neighborhood favorites to little treats, we'll bring the good stuff to your door.</p>
+      </div>
+
+      <div class="delivery-art" aria-hidden="true">
+        <span class="art-sun"></span>
+        <span class="art-route route-one"></span>
+        <span class="art-route route-two"></span>
+        <span class="art-pin"><span></span></span>
+        <span class="art-package"><span></span><i></i></span>
+        <span class="art-sparkle sparkle-one">✦</span>
+        <span class="art-sparkle sparkle-two">✦</span>
+      </div>
+
+      <p class="story-footnote"><span class="status-dot"></span> Delivering smiles in your neighborhood</p>
+    </aside>
+
+    <section class="auth-panel">
+      <div class="mobile-brand">
+        <a class="brand" routerLink="/login" aria-label="Dash home">
+          <span class="brand-mark" aria-hidden="true">d</span>
+          <span>dash<span class="brand-dot">.</span></span>
+        </a>
+      </div>
+
+      <div class="form-wrap">
+        <p class="eyebrow form-eyebrow">WELCOME BACK</p>
+        <h2>Sign in to dash</h2>
+        <p class="form-intro">Good to see you again. Let's get something tasty.</p>
+
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+          <label class="field-label" for="login-email">Email address</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
+                <path d="m4.5 7 7.5 6 7.5-6"></path>
+              </svg>
+            </span>
+            <input
+              id="login-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              [(ngModel)]="email"
+              #emailInput="ngModel"
+              required
+              email
+              [class.invalid]="emailInput.invalid && (emailInput.touched || loginForm.submitted)"
+              [attr.aria-invalid]="emailInput.invalid && (emailInput.touched || loginForm.submitted)"
+            />
+          </div>
+          @if (emailInput.invalid && (emailInput.touched || loginForm.submitted)) {
+            <p class="field-error">Enter a valid email address.</p>
+          }
+
+          <div class="label-row">
+            <label class="field-label" for="login-password">Password</label>
+            <button
+              class="text-button"
+              type="button"
+              (click)="statusMessage = 'Password reset is not connected yet. Please contact support for help.'"
+            >
+              Forgot password?
+            </button>
+          </div>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="4.5" y="10" width="15" height="10" rx="2"></rect>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                <path d="M12 14v2"></path>
+              </svg>
+            </span>
+            <input
+              id="login-password"
+              name="password"
+              [type]="showPassword ? 'text' : 'password'"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              [(ngModel)]="password"
+              #passwordInput="ngModel"
+              required
+              minlength="8"
+              [class.invalid]="passwordInput.invalid && (passwordInput.touched || loginForm.submitted)"
+              [attr.aria-invalid]="passwordInput.invalid && (passwordInput.touched || loginForm.submitted)"
+            />
+            <button
+              class="visibility-button"
+              type="button"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              (click)="showPassword = !showPassword"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+          @if (passwordInput.invalid && (passwordInput.touched || loginForm.submitted)) {
+            <p class="field-error">Password must be at least 8 characters.</p>
+          }
+
+          <div class="form-options">
+            <label class="checkbox-label">
+              <input type="checkbox" name="rememberMe" [(ngModel)]="rememberMe" />
+              <span class="custom-checkbox" aria-hidden="true"></span>
+              Keep me signed in
+            </label>
+          </div>
+
+          <button class="submit-button" type="submit" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Signing in…' : 'Sign in' }} <span aria-hidden="true">→</span>
+          </button>
+          @if (statusMessage) {
+            <p class="form-status" role="status">{{ statusMessage }}</p>
+          }
+        </form>
+
+        <p class="switch-prompt">New to dash? <a routerLink="/register">Create an account</a></p>
+        <p class="legal-note">By continuing, you agree to our Terms and Privacy Policy.</p>
+      </div>
+      <p class="panel-footer">Made for good days <span aria-hidden="true">♥</span></p>
+    </section>
+  </section>
+</main>

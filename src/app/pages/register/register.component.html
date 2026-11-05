@@ -1,0 +1,241 @@
+<main class="auth-page">
+  <section class="auth-layout" aria-label="Create an account">
+    <aside class="auth-story">
+      <a class="brand" routerLink="/login" aria-label="Dash home">
+        <span class="brand-mark" aria-hidden="true">d</span>
+        <span>dash<span class="brand-dot">.</span></span>
+      </a>
+
+      <div class="story-copy">
+        <p class="eyebrow">A LITTLE MORE DELICIOUS</p>
+        <h1>Make room for the good stuff.</h1>
+        <p>Join dash for easy ordering, new local finds, and one less thing to think about.</p>
+      </div>
+
+      <div class="delivery-art" aria-hidden="true">
+        <span class="art-sun"></span>
+        <span class="art-route route-one"></span>
+        <span class="art-route route-two"></span>
+        <span class="art-pin"><span></span></span>
+        <span class="art-package"><span></span><i></i></span>
+        <span class="art-sparkle sparkle-one">✦</span>
+        <span class="art-sparkle sparkle-two">✦</span>
+      </div>
+
+      <p class="story-footnote"><span class="status-dot"></span> Your neighborhood, served with a smile</p>
+    </aside>
+
+    <section class="auth-panel">
+      <div class="mobile-brand">
+        <a class="brand" routerLink="/login" aria-label="Dash home">
+          <span class="brand-mark" aria-hidden="true">d</span>
+          <span>dash<span class="brand-dot">.</span></span>
+        </a>
+      </div>
+
+      <div class="form-wrap">
+        <p class="eyebrow form-eyebrow">LET'S GET YOU STARTED</p>
+        <h2>Create your account</h2>
+        <p class="form-intro">A few details and you're on your way to something delicious.</p>
+
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate>
+          <label class="field-label" for="register-name">Full name</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <circle cx="12" cy="8" r="3.5"></circle>
+                <path d="M5 20a7 7 0 0 1 14 0"></path>
+              </svg>
+            </span>
+            <input
+              id="register-name"
+              name="fullName"
+              type="text"
+              autocomplete="name"
+              placeholder="Your name"
+              [(ngModel)]="fullName"
+              #nameInput="ngModel"
+              required
+              minlength="2"
+              [class.invalid]="nameInput.invalid && (nameInput.touched || registerForm.submitted)"
+              [attr.aria-invalid]="nameInput.invalid && (nameInput.touched || registerForm.submitted)"
+            />
+          </div>
+          @if (nameInput.invalid && (nameInput.touched || registerForm.submitted)) {
+            <p class="field-error">Please enter your name.</p>
+          }
+
+          <label class="field-label spaced-label" for="register-email">Email address</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="3.5" y="5.5" width="17" height="13" rx="2"></rect>
+                <path d="m4.5 7 7.5 6 7.5-6"></path>
+              </svg>
+            </span>
+            <input
+              id="register-email"
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="you@example.com"
+              [(ngModel)]="email"
+              #emailInput="ngModel"
+              required
+              email
+              [class.invalid]="emailInput.invalid && (emailInput.touched || registerForm.submitted)"
+              [attr.aria-invalid]="emailInput.invalid && (emailInput.touched || registerForm.submitted)"
+            />
+          </div>
+          @if (emailInput.invalid && (emailInput.touched || registerForm.submitted)) {
+            <p class="field-error">Enter a valid email address.</p>
+          }
+
+          <label class="field-label spaced-label" for="register-mobile">Mobile number</label>
+          <div class="input-wrap phone-input-wrap">
+            <label class="country-select-wrap" for="register-country">
+              <span class="sr-only">Country</span>
+              <select
+                id="register-country"
+                name="country"
+                [(ngModel)]="selectedCountry"
+                required
+                aria-label="Select country and calling code"
+              >
+                @for (country of countries; track country.code) {
+                  <option [value]="country.code">{{ country.name }} ({{ country.dialCode }})</option>
+                }
+              </select>
+              <span class="country-chevron" aria-hidden="true">⌄</span>
+            </label>
+            <span class="dial-code" aria-hidden="true">{{ selectedDialCode }}</span>
+            <input
+              id="register-mobile"
+              name="mobileNumber"
+              type="tel"
+              inputmode="numeric"
+              autocomplete="tel-national"
+              placeholder="Mobile number"
+              [(ngModel)]="mobileNumber"
+              #mobileInput="ngModel"
+              required
+              pattern="[0-9]{6,15}"
+              [class.invalid]="mobileInput.invalid && (mobileInput.touched || registerForm.submitted)"
+              [attr.aria-invalid]="mobileInput.invalid && (mobileInput.touched || registerForm.submitted)"
+            />
+          </div>
+          @if (mobileInput.invalid && (mobileInput.touched || registerForm.submitted)) {
+            <p class="field-error">Enter 6 to 15 digits for your mobile number.</p>
+          }
+
+          <label class="field-label spaced-label" for="register-password">Password</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="4.5" y="10" width="15" height="10" rx="2"></rect>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                <path d="M12 14v2"></path>
+              </svg>
+            </span>
+            <input
+              id="register-password"
+              name="password"
+              [type]="showPassword ? 'text' : 'password'"
+              autocomplete="new-password"
+              placeholder="At least 8 characters"
+              [(ngModel)]="password"
+              #passwordInput="ngModel"
+              required
+              minlength="8"
+              [class.invalid]="passwordInput.invalid && (passwordInput.touched || registerForm.submitted)"
+              [attr.aria-invalid]="passwordInput.invalid && (passwordInput.touched || registerForm.submitted)"
+            />
+            <button
+              class="visibility-button"
+              type="button"
+              [attr.aria-label]="showPassword ? 'Hide password' : 'Show password'"
+              (click)="showPassword = !showPassword"
+            >
+              {{ showPassword ? 'Hide' : 'Show' }}
+            </button>
+          </div>
+          <div class="strength-row" aria-live="polite">
+            <span class="strength-bars" [attr.data-strength]="passwordStrength"> <i></i><i></i><i></i><i></i> </span>
+            <span>{{
+              password.length
+                ? passwordStrength < 2
+                  ? 'A little stronger would be safer'
+                  : passwordStrength < 4
+                    ? 'Getting stronger'
+                    : 'Strong password'
+                : 'Use 8+ characters'
+            }}</span>
+          </div>
+          @if (passwordInput.invalid && (passwordInput.touched || registerForm.submitted)) {
+            <p class="field-error">Password must be at least 8 characters.</p>
+          }
+
+          <label class="field-label spaced-label" for="register-confirm">Confirm password</label>
+          <div class="input-wrap">
+            <span class="input-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24">
+                <rect x="4.5" y="10" width="15" height="10" rx="2"></rect>
+                <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                <path d="m9 15 2 2 4-4"></path>
+              </svg>
+            </span>
+            <input
+              id="register-confirm"
+              name="confirmPassword"
+              [type]="showPassword ? 'text' : 'password'"
+              autocomplete="new-password"
+              placeholder="Re-enter your password"
+              [(ngModel)]="confirmPassword"
+              #confirmInput="ngModel"
+              required
+              [class.invalid]="
+                (confirmInput.invalid || (confirmPassword && password !== confirmPassword)) &&
+                (confirmInput.touched || registerForm.submitted)
+              "
+              [attr.aria-invalid]="
+                (confirmInput.invalid || (confirmPassword && password !== confirmPassword)) &&
+                (confirmInput.touched || registerForm.submitted)
+              "
+            />
+          </div>
+          @if (
+            (confirmInput.invalid || (confirmPassword && password !== confirmPassword)) &&
+            (confirmInput.touched || registerForm.submitted)
+          ) {
+            <p class="field-error">
+              {{
+                confirmPassword && password !== confirmPassword
+                  ? 'Passwords do not match.'
+                  : 'Please confirm your password.'
+              }}
+            </p>
+          }
+
+          <label class="checkbox-label terms-label">
+            <input type="checkbox" name="acceptTerms" ngModel required #termsInput="ngModel" />
+            <span class="custom-checkbox" aria-hidden="true"></span>
+            <span>I agree to the Terms and Privacy Policy.</span>
+          </label>
+          @if (termsInput.invalid && (termsInput.touched || registerForm.submitted)) {
+            <p class="field-error terms-error">Please accept the terms to create an account.</p>
+          }
+
+          <button class="submit-button" type="submit" [disabled]="isSubmitting">
+            {{ isSubmitting ? 'Creating account…' : 'Create account' }} <span aria-hidden="true">→</span>
+          </button>
+          @if (statusMessage) {
+            <p class="form-status" role="status">{{ statusMessage }}</p>
+          }
+        </form>
+
+        <p class="switch-prompt">Already have an account? <a routerLink="/login">Sign in</a></p>
+      </div>
+      <p class="panel-footer">Made for good days <span aria-hidden="true">♥</span></p>
+    </section>
+  </section>
+</main>
